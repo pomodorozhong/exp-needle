@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Needle WASM benchmark</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Local browser benchmark</p>
+        <h1>Needle 2 <span>vs.</span> Needle 3</h1>
+        <p class="lede">The same tool schema and prompt, executed locally in isolated WebAssembly workers.</p>
+      </header>
+
+      <section class="controls" aria-labelledby="controls-title">
+        <h2 id="controls-title">Test setup</h2>
+        <label>
+          Prompt
+          <input id="prompt" value="Set the kitchen temperature to 21 degrees" />
+        </label>
+        <label>
+          Measured runs
+          <select id="runs">
+            <option>1</option>
+            <option selected>3</option>
+            <option>5</option>
+            <option>10</option>
+          </select>
+        </label>
+        <button id="run" type="button">Run benchmark</button>
+        <p id="status" role="status">Ready. The first run downloads about 28 MB of model data.</p>
+      </section>
+
+      <section class="cards" aria-label="Benchmark results">
+        <article class="model-card" data-model="needle3">
+          <div class="card-heading">
+            <div><p class="generation">Needle 3</p><h2>2-layer rung</h2></div>
+            <span class="pill">smallest public build</span>
+          </div>
+          <dl>
+            <div><dt>Decode</dt><dd data-field="decode">—</dd></div>
+            <div><dt>Prefill</dt><dd data-field="prefill">—</dd></div>
+            <div><dt>Peak model RAM</dt><dd data-field="peak">—</dd></div>
+            <div><dt>WASM heap</dt><dd data-field="heap">—</dd></div>
+            <div><dt>Weights</dt><dd>13.3 MB</dd></div>
+          </dl>
+          <pre data-field="output">Waiting to run…</pre>
+        </article>
+
+        <article class="model-card" data-model="needle2">
+          <div class="card-heading">
+            <div><p class="generation">Needle 2</p><h2>Published CQ2</h2></div>
+            <span class="pill">smallest published</span>
+          </div>
+          <dl>
+            <div><dt>Decode</dt><dd data-field="decode">—</dd></div>
+            <div><dt>Prefill</dt><dd data-field="prefill">—</dd></div>
+            <div><dt>Peak model RAM</dt><dd data-field="peak">—</dd></div>
+            <div><dt>WASM heap</dt><dd data-field="heap">—</dd></div>
+            <div><dt>Weights</dt><dd>13.7 MB</dd></div>
+          </dl>
+          <pre data-field="output">Waiting to run…</pre>
+        </article>
+      </section>
+
+      <section class="method">
+        <h2>What the numbers mean</h2>
+        <p><strong>Decode and prefill</strong> are medians of the engine-reported rates. The first completion is a warm-up and is not counted.</p>
+        <p><strong>Peak model RAM</strong> comes from Needle itself when the engine reports a positive value; current WASM builds may return an unavailable sentinel. <strong>WASM heap</strong> is the reliable cross-model comparison: the worker's allocated linear memory after inference, including the engine, model, caches, and allocator headroom.</p>
+        <p>Workers run one at a time and are terminated afterward. This avoids counting both models in memory simultaneously.</p>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

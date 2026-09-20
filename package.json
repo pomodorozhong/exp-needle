@@ -1,0 +1,10 @@
+{
+  "name": "needle-wasm-benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser benchmark comparing the smallest public Needle 2 and Needle 3 WASM builds.",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check public/app.js && node --check public/needle-worker.js"
+  }
+}
