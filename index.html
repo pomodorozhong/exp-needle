@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0f12" />
+    <title>Snake Lab · Needle WASM</title>
+    <link rel="stylesheet" href="/src/site.css" />
+  </head>
+  <body>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="/" aria-current="page">Snake Lab</a>
+      <a class="nav-link" href="/benchmark.html">Benchmark</a>
+    </nav>
+
+    <main class="snake-page">
+      <header class="intro">
+        <p class="eyebrow">Local browser agent</p>
+        <h1>Needle plays Snake</h1>
+        <p>Watch Needle 3 steer a fixed-length snake toward the fruit, one local decision at a time.</p>
+      </header>
+
+      <section class="snake-layout" aria-label="Needle Snake game">
+        <article class="panel board-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="panel-kicker">AI Snake</p>
+              <h2>Decision grid</h2>
+            </div>
+            <span class="size-label">12 × 12</span>
+          </div>
+
+          <div class="board-coordinates" aria-label="12 by 12 Snake board">
+            <div aria-hidden="true"></div>
+            <div class="x-coordinates" aria-hidden="true">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+              <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+            </div>
+            <div class="y-coordinates" aria-hidden="true">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+              <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+            </div>
+            <div id="game" class="game-canvas"></div>
+          </div>
+
+          <div id="game-over" class="game-over" hidden>
+            <p class="eyebrow">Run ended</p>
+            <strong>Game over</strong>
+            <span id="game-over-reason">The snake hit a wall.</span>
+            <button id="overlay-restart" class="primary-button" type="button">Restart</button>
+          </div>
+        </article>
+
+        <aside class="telemetry" aria-label="Needle controls and telemetry">
+          <section class="status-strip panel">
+            <div class="status-main"><span id="status-dot" class="status-dot"></span><strong id="game-status">Loading model</strong></div>
+            <label class="layer-picker" for="model-layers">
+              <span>Needle 3</span>
+              <select id="model-layers" aria-label="Needle 3 layer count">
+                <option value="2" selected>2 layers · 13 MB</option>
+                <option value="4">4 layers · 15 MB</option>
+                <option value="8">8 layers · 27 MB</option>
+                <option value="20">20 layers · 35 MB</option>
+              </select>
+            </label>
+          </section>
+
+          <section class="code-panel panel">
+            <div class="code-heading">
+              <h2>Input to Needle</h2>
+              <div class="code-actions"><span>TEXT</span><button id="save-input" type="button">Save</button></div>
+            </div>
+            <textarea id="needle-input" aria-label="Input to Needle" spellcheck="false">Waiting for model…</textarea>
+          </section>
+
+          <section class="intention-panel panel">
+            <label for="intention">Intention</label>
+            <div class="intention-row">
+              <input id="intention" value="get_closer_to_fruit" autocomplete="off" spellcheck="false" />
+              <button id="apply-intention" type="button">Apply</button>
+            </div>
+            <p id="intention-note">Press Enter or Apply. Changes take effect on the next decision.</p>
+          </section>
+
+          <section class="code-panel panel output-panel">
+            <div class="code-heading"><h2>Output from Needle</h2><span>JSON</span></div>
+            <pre id="needle-output">No decision yet.</pre>
+          </section>
+
+          <div class="game-controls">
+            <button id="slower" type="button">Slower</button>
+            <button id="toggle-run" class="primary-button" type="button" disabled>Start</button>
+            <button id="step-run" type="button" disabled>Step</button>
+            <button id="faster" type="button">Faster</button>
+          </div>
+          <div class="secondary-controls">
+            <button id="restart" type="button">Restart</button>
+            <button id="regenerate" type="button" hidden>Regenerate</button>
+          </div>
+
+          <section class="stats panel" aria-label="Run statistics">
+            <div><span>Score</span><strong id="score">0</strong></div>
+            <div><span>Steps</span><strong id="steps">0</strong></div>
+            <div><span>Speed</span><strong id="speed">4 t/s</strong></div>
+            <div><span>Inference</span><strong id="inference">—</strong></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="/src/snake-app.js"></script>
+  </body>
+</html>

@@ -3,8 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "description": "Browser benchmark comparing the smallest public Needle 2 and Needle 3 WASM builds.",
+  "type": "module",
   "scripts": {
-    "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check public/app.js && node --check public/needle-worker.js"
+    "start": "vite --host 127.0.0.1 --port 4173",
+    "build": "vite build",
+    "check": "node --check src/snake-app.js && node --check src/snake-core.js && node --check src/benchmark-app.js && node --check public/snake-worker.js && node --check public/needle-worker.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "grid-engine": "2.52.1",
+    "phaser": "4.0.0"
+  },
+  "devDependencies": {
+    "vite": "7.1.7"
   }
 }
